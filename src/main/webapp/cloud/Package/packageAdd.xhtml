@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="productid" value="#{packageAdd.productId}"></f:viewParam>
+            <f:viewAction action="#{packageAdd.fillAddScreen()}"></f:viewAction>
+        </f:metadata>
+        <h:form id="addpackageform">
+            <h3>Add New Package of Product: #{packageAdd.productName}</h3>
+            <p:panelGrid columns="2">
+                <h:outputLabel for="id" value="Id:" />
+                <p:inputText id="id" value="#{packageAdd.packageBeanAdd.prodpackagePK.id}" required="true" />
+                <h:outputLabel for="name" value="Name:" />
+                <p:inputText id="name" value="#{packageAdd.packageBeanAdd.name}" required="true" />
+                <h:outputLabel for="price" value="Price" />
+                <p:inputText id="price" value="#{packageAdd.packageBeanAdd.price}" required="true" />
+                <h:outputLabel for="startdt" value="Start Date" />
+                <p:calendar id="startdt" value="#{packageAdd.packageBeanAdd.startDate}" pattern="dd-MMM-yyyy" />
+                <h:outputLabel for="enddt" value="End Date" />
+                <p:calendar id="enddt" value="#{packageAdd.packageBeanAdd.endDate}" pattern="dd-MMM-yyyy" />
+                <h:outputLabel for="duration" value="Duration" />
+                <p:inputText id="duration" value="#{packageAdd.packageBeanAdd.durationDays}" required="true" />
+                <h:outputLabel for="dbsize" value="Database Size" />
+                <p:inputText id="dbsize" value="#{packageAdd.packageParmaMap.dbsize}" required="true" />
+                <h:outputLabel for="userno" value="No of user can register" />
+                <p:inputText id="userno" value="#{packageAdd.packageParmaMap.userno}" required="true" />
+                <h:outputLabel for="wrongattempt" value="Max no of wrong password enter" />
+                <p:inputText id="wrongattempt" value="#{packageAdd.packageParmaMap.wrongattempt}" required="true" />
+                <h:outputLabel for="traceduserno" value="No of loggedin user" />
+                <p:inputText id="traceduserno" value="#{packageAdd.packageParmaMap.traceduserno}" required="true" />
+
+                <p:commandButton styleClass="purple-button" value="Add" action="#{packageAdd.add()}" />
+                <p:button styleClass="black-button" value="Back" outcome="PackageList" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/signin.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <span class="title">Tenant User Login</span>
+        <f:metadata>
+            <f:viewAction action="#{loginController.getTenantList()}"></f:viewAction>
+        </f:metadata>
+        <h:form>
+            <div class="ui-g ui-fluid" style="text-align: left">
+                <p:growl id="growl" sticky="true" showDetail="true" life="5" autoUpdate="true" />
+                <div class="ui-g-6">
+                    <p:outputLabel value="Select Tenant:" />
+                </div>
+                <div class="ui-g-6">
+                    <p:selectOneMenu id="selectonetenant" value="#{loginController.tenantId}" required="true">
+                        <p:ajax listener="#{loginController.onTenantChange}" update="product" />
+                        <f:selectItem itemLabel="Select tenant" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{loginController.tenantMap}" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="ui-g-6">
+                    <p:outputLabel for="product" value="Select Product:" />
+                </div>
+                <div class="ui-g-6">
+                    <p:selectOneMenu id="product" value="#{loginController.productId}" required="true">
+                        <f:selectItem itemLabel="Select product" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{loginController.productMap}" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="ui-g-12">
+                    <p:inputText placeholder="Username" id="username" value="#{loginController.userId}" required="true" label="username" />
+                </div>
+                <div class="ui-g-12">
+
+                    <p:password placeholder="Password" id="password" value="#{loginController.password}" required="true" label="password" />
+                </div>
+
+                <div class="ui-g-6">
+                    <p:commandButton styleClass="purple-button" value="Login"  action="#{loginController.userLogin()}" icon="fa fa-check"/>
+                </div>
+                <div class="ui-g-6">
+                    <p:button value="Home" styleClass="black-button" outcome="/index?faces-redirect=true" icon="fa fa-home"/> 
+                </div>
+                <div class="ui-g-12">
+                    <p:button value="Register" styleClass="purple-button" outcome="UserRegister" icon="fa fa-user"/> 
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

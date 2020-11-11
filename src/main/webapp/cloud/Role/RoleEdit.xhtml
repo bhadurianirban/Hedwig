@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="productid" value="#{roleEdit.productId}"></f:viewParam>
+            <f:viewParam name="tenantid" value="#{roleEdit.tenantId}"></f:viewParam>
+            <f:viewParam name="roleid" value="#{roleEdit.roleId}"></f:viewParam>
+            <f:viewAction action="#{roleEdit.fillEditRoleValues()}" />
+        </f:metadata>
+        <h:form id="roleeditform">
+            <h3>Edit Role for Product: #{roleEdit.productName}</h3>
+            <p:panelGrid columns="2">
+                <h:outputLabel for="id" value="Role Id:" />
+                <h:inputText id="id" value="#{roleEdit.editRole.rolePK.id}" disabled="true" required="true"/>
+                <h:outputLabel for="rolename" value="Role Name:" />
+                <h:inputText id="rolename" value="#{roleEdit.editRole.name}" required="true"/>
+
+
+                <p:commandButton styleClass="purple-button" value="Change" action="#{roleEdit.save()}" />
+                <p:button styleClass="black-button" value="Back" outcome="RoleList" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+

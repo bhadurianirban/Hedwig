@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="tenantid" value="#{cartList.tenantId}"></f:viewParam>
+            <f:viewAction action="#{cartList.fillCartValues()}"></f:viewAction>
+        </f:metadata>
+        <h:form id="cartlist">
+            <h3>Products in your Cart</h3>
+            <p:dataTable var="cart" value="#{cartList.cartMapList}" style="text-align: center">
+                <p:column headerText="Product Name">
+                    <h:outputText value="#{cart.get('productName')}" />
+                </p:column>
+                <p:column headerText="Package Name">
+                    <h:outputText value="#{cart.get('packageName')}" />
+                </p:column>
+                <p:column headerText="View">
+                    <p:commandButton styleClass="purple-button" icon="fa fa-search" title="View Details" action="#{cartList.goToViewCart()}" >
+                        <f:setPropertyActionListener value="#{cart}" target="#{cartList.selectedCart}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="Buy">
+                    <p:commandButton styleClass="purple-button" icon="fa fa-briefcase" title="Buy" action="#{cartList.goToBuyPackage()}" >
+                        <f:setPropertyActionListener value="#{cart}" target="#{cartList.selectedCart}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="Delete">
+                    <p:commandButton styleClass="red-button" icon="fa fa-trash" title="Delete from cart" action="#{cartList.goToDeleteCart(cart)}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+

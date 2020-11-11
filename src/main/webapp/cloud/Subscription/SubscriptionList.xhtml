@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" globalOnly="true" sticky="true" showDetail="true" life="5" autoUpdate="true" />
+        <f:metadata>
+            <f:viewAction action="#{subscriptionList.fillSubscriptionValues()}" />
+        </f:metadata>
+        <h3>Subscription List</h3> 
+        <h:form id="subscriptionlist" style="text-align: center">
+            <p:dataTable var="subscription" value="#{subscriptionList.subscriptionMapList}" reflow="true">
+                <p:column headerText="Product Name">
+                    <h:outputText value="#{subscription.get('productName')}" />
+                </p:column>
+                <p:column headerText="Start Date">
+                    <h:outputText value="#{subscription.get('startDate')}">
+                        <f:convertDateTime pattern="dd-MMM-yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="End Date">
+                    <h:outputText value="#{subscription.get('endDate')}">
+                        <f:convertDateTime pattern="dd-MMM-yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="DB Admin User Id">
+                    <h:outputText value="#{subscription.get('dbAdminUser')}" />
+                </p:column>
+                <p:column headerText="DB Connection Url">
+                    <h:outputText value="#{subscription.get('dbconnUrl')}" />
+                </p:column>
+                <p:column headerText="Schema">
+                    <p:commandButton  styleClass="purple-button" onclick="PF('bui').show()" rendered="#{subscription['dbExists'] eq 3}" icon="fa fa-database" title="Create Schema" action="#{subscriptionList.goToCreateDB(subscription)}" />
+                    <p:commandButton  styleClass="red-button" onclick="PF('bui').show()" rendered="#{subscription['dbExists'] eq 2}" icon="fa fa-minus" title="Delete Schema" action="#{subscriptionList.goToDropSchema(subscription)}" />
+                </p:column>
+                <p:column headerText="Change">
+                    <p:commandButton styleClass="purple-button" icon="fa fa-edit" title="Edit" action="#{subscriptionList.goToEditSubscription()}" rendered="#{subscription['approval'] eq 'true'}">
+                        <f:setPropertyActionListener value="#{subscription}" target="#{subscriptionList.selectedSubscription}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="Add Role">
+                    <p:commandButton styleClass="purple-button" icon="fa fa-plus" title="Add Role" action="#{subscriptionList.goToAddRole()}" rendered="#{subscription['approval'] eq 'true'}">
+                        <f:setPropertyActionListener value="#{subscription}" target="#{subscriptionList.selectedSubscription}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+            <p:blockUI block="main-screen" widgetVar="bui" >
+                Creating DB...
+
+            </p:blockUI>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+

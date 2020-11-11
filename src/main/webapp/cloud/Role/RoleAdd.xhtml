@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="productid" value="#{roleAdd.productId}"></f:viewParam>
+            <f:viewParam name="tenantid" value="#{roleAdd.tenantId}"></f:viewParam>
+            <f:viewAction action="#{roleAdd.fillRoleValues()}"></f:viewAction>
+        </f:metadata>
+        <h:form id="roleaddform">
+            <h3>Add New Role for Product: #{roleAdd.productName}</h3>
+            <p:panelGrid columns="2">
+                <h:outputLabel for="id" value="Role Id:" />
+                <p:inputNumber id="id" value="#{roleAdd.roleId}" decimalPlaces="0"  required="true" >
+                    <f:validateDoubleRange minimum="1" maximum="999" />
+                </p:inputNumber>
+                <h:outputLabel for="name" value="Role Name:" />
+                <h:inputText id="name" value="#{roleAdd.role.name}" required="true" />
+
+                <p:commandButton styleClass="purple-button" value="Add" action="#{roleAdd.add()}" />
+                <p:button styleClass="black-button" value="Back" outcome="RoleList" />
+
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="userid" value="#{userEdit.userId}"></f:viewParam>
+            <f:viewParam name="tenantid" value="#{userEdit.tenantId}"></f:viewParam>
+            <f:viewParam name="productid" value="#{userEdit.productId}"></f:viewParam>
+            <f:viewParam name="roleid" value="#{userEdit.roleId}"></f:viewParam>
+            <f:viewAction action="#{userEdit.fillEditUserValues()}" />
+        </f:metadata>
+        <h:form id="usereditform">
+            <h3>Edit User</h3>
+            <p:panelGrid columns="2">
+                <h:outputLabel for="id" value="Role Id:" />
+                <h:inputText id="id" value="#{userEdit.userEditBean.userPK.roleId}" disabled="true"/>
+                <h:outputLabel for="userid" value="User Id:" />
+                <h:inputText id="userid" value="#{userEdit.userEditBean.userPK.id}" disabled="true"/>
+                <h:outputLabel for="name" value="User Name:" />
+                <h:inputText id="name" value="#{userEdit.userEditBean.name}" required="true"/>
+                <h:outputLabel for="password" value="Password:" />
+                <h:inputText id="password" value="#{userEdit.userEditBean.password}" required="true"/>
+                <h:outputLabel for="activity" value="Make active or inactive:" />
+                <p:selectOneMenu id="activity" value="#{userEdit.userEditBean.active}">
+                    <f:selectItem itemLabel="Active" itemValue="true" />
+                    <f:selectItem itemLabel="Inactive" itemValue="false" />
+                </p:selectOneMenu>
+                <p:commandButton styleClass="purple-button" value="Change" action="#{userEdit.save()}" />
+                <p:button styleClass="black-button" value="Back" outcome="UserList" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

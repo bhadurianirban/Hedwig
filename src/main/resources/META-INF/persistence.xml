@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="org.hedwig_persistence" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>org.dgrf.dgrftenant.entities.Package</class>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <class>org.hedwig.tenant.entities.Tenant</class>
+    <class>org.hedwig.tenant.entities.Cart</class>
+    <class>org.hedwig.tenant.entities.Subscription</class>
+    <class>org.hedwig.tenant.entities.Packageparam</class>
+    <class>org.hedwig.tenant.entities.Product</class>
+    <class>org.hedwig.tenant.entities.Role</class>
+    <class>org.hedwig.tenant.entities.User</class>
+    <class>org.hedwig.tenant.entities.Userlogintrace</class>
+    <class>org.hedwig.tenant.entities.Prodpackage</class>
+    <class>org.hedwig.tenant.entities.Payment</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tenant?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="bhadurianirban"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="Jhom2brishti"/>
+    </properties>
+  </persistence-unit>
+</persistence>

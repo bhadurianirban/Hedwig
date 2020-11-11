@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd" version="2.0">
+    <named-query name="Tenant.findMaxTenantId">
+        <query>SELECT max(t.id) FROM Tenant t </query>
+    </named-query>
+    <named-query name="Payment.findMaxPaymentId">
+        <query>SELECT max(p.paymentPK.id) FROM Payment p </query>
+    </named-query>
+    <named-query name="Role.findMaxRoleId">
+        <query>SELECT max(r.rolePK.id) FROM Role r </query>
+    </named-query>
+    <named-query name="Tenant.findByTenantEmailAndPassword">
+        <query>SELECT t FROM Tenant t where t.email = :email and t.password = :password</query>
+    </named-query>
+    <named-query name="Tenant.findByTenantEmail">
+        <query>SELECT t FROM Tenant t where t.email = :email</query>
+    </named-query>
+    <named-query name="Cart.findMaxCartId">
+        <query>SELECT max(c.cartPK.id) FROM Cart c </query>
+    </named-query>
+    <named-query name="Cart.findByTenantId">
+        <query>SELECT c FROM Cart c where c.cartPK.tenantId = :tenantId</query>
+    </named-query>
+    <named-query name="Cart.findByTenantIdAndProductId">
+        <query>SELECT c FROM Cart c where c.cartPK.tenantId = :tenantId and c.cartPK.productId = :prodpackageProductId</query>
+    </named-query>
+    <named-query name="Subscription.findByTenantId">
+        <query>SELECT s FROM Subscription s where s.subscriptionPK.tenantId =:tenantId</query>
+    </named-query>
+    <named-query name="User.findByTenantIdProdIdUserId">
+        <query>SELECT u FROM User u where u.userPK.id =:userId and u.userPK.tenantId =:tenantId and u.userPK.productId =:productId</query>
+    </named-query>
+    <named-query name="Userlogintrace.findUsersGroupbyLogintime">
+        <query>SELECT u FROM Userlogintrace u where u.userlogintracePK.userId =:userId and u.userlogintracePK.tenantId =:tenantId and u.userlogintracePK.productId =:productId ORDER BY u.userlogintracePK.loginTime</query>
+    </named-query>
+</entity-mappings>

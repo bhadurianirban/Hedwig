@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="productid" value="#{userActivation.productId}"></f:viewParam>
+            <f:viewParam name="tenantid" value="#{userActivation.tenantId}"></f:viewParam>
+            <f:viewAction action="#{userActivation.fillInactiveUserValues()}" />
+        </f:metadata>
+        <h:form id="activeinactiveuser">
+            <h3>List of Non-active Users of Product : #{userActivation.productName} and Tenant : #{userActivation.tenantName}</h3>
+            <p:dataTable id="checkboxDT" var="user" value="#{userActivation.users}" selection="#{userActivation.selectedUsers}" rowKey="#{user.userPK.id}">
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                <p:column headerText="Id">
+                    <h:outputText value="#{user.userPK.id}" />
+                </p:column>
+                <p:column headerText="Name">
+                    <h:outputText value="#{user.name}" />
+                </p:column>
+                <p:column headerText="Active">
+                    <h:outputText value="#{user.active}" />
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton styleClass="purple-button" process="checkboxDT" value="Activate" action="#{userActivation.makeUsersActive()}" />
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

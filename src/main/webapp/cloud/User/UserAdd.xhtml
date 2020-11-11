@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="productid" value="#{userAdd.productId}"></f:viewParam>
+            <f:viewParam name="tenantid" value="#{userAdd.tenantId}"></f:viewParam>
+            <f:viewParam name="roleid" value="#{userAdd.roleId}"></f:viewParam>
+            <f:viewAction action="#{userAdd.fillAddScreen()}"></f:viewAction>
+        </f:metadata>
+        <h:form id="useraddform">
+            <h3>Add New User for Product : #{userAdd.prodName} and Role: #{userAdd.roleName}</h3>
+            <h4>Number of users registered for the Product #{userAdd.prodName} : #{userAdd.noOfUsers}</h4>
+            <p:panelGrid columns="2">
+                <h:outputLabel for="id" value="User Id:" />
+                <p:inputText id="id" value="#{userAdd.userId}" required="true" />
+                <h:outputLabel for="name" value="Name:" />
+                <p:inputText id="name" value="#{userAdd.user.name}" required="true" />
+                <h:outputLabel for="password" value="Password:" />
+                <p:password id="password" value="#{userAdd.user.password}" feedback="true" required="true" />
+                <h:outputLabel for="activity" value="Make active or inactive:" />
+                <p:selectOneMenu id="activity" value="#{userAdd.user.active}">
+                    <f:selectItem itemLabel="Active" itemValue="true" />
+                    <f:selectItem itemLabel="Inactive" itemValue="false" />
+                </p:selectOneMenu>
+
+
+                <p:commandButton styleClass="purple-button" value="Add" action="#{userAdd.Add()}" />
+                <p:button styleClass="black-button" value="Back" outcome="UserList" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+

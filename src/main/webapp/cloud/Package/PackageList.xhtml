@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" globalOnly="true" sticky="true" showDetail="true" life="5" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="productid" value="#{packageList.productId}"></f:viewParam>
+            <f:viewAction action="#{packageList.fillPackageValues()}"/>
+        </f:metadata>
+        <h:form id="packageadd">
+            <h3>Packages of Product: #{packageList.productName}</h3>
+            <p:button styleClass="purple-button" value="Add" outcome="packageAdd" rendered="#{loginController.loginType eq 2}" />
+        </h:form>
+        <br />
+        
+        <h:form id="packagelist">    
+            <p:dataTable var="pkg" value="#{packageList.prodpackages}" style="text-align: center" reflow="true">
+                <p:column headerText="Id" >
+                    <h:outputText value="#{pkg.prodpackagePK.id}" />
+                </p:column>
+                <p:column headerText="Name">
+                    <h:outputText value="#{pkg.name}" />
+                </p:column>
+                <p:column headerText="Price">
+                    <h:outputText value="#{pkg.price}" />
+                </p:column>
+                <p:column headerText="Duration">
+                    <h:outputText value="#{pkg.durationDays} Days" />
+                </p:column>
+                <p:column headerText="Starting Day">
+                    <h:outputText value="#{pkg.startDate}">
+                        <f:convertDateTime pattern="dd-MMM-yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="End Day">
+                    <h:outputText value="#{pkg.endDate}">
+                        <f:convertDateTime pattern="dd-MMM-yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Change" rendered="#{loginController.loginType eq 2}">
+                    <p:commandButton styleClass="purple-button" icon="fa fa-edit" title="Edit" action="#{packageList.goToEditPackage()}">
+                        <f:setPropertyActionListener value="#{pkg}" target="#{packageList.selectedPkg}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="Param List" rendered="#{loginController.loginType eq 2}">
+                    <p:commandButton styleClass="purple-button" icon="fa fa-folder-open" title="Parameter List" action="#{packageList.goToParamList()}">
+                        <f:setPropertyActionListener value="#{pkg}" target="#{packageList.selectedPkg}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="Add To Cart"  rendered="#{!(loginController.loginType eq 2)}">
+                    <p:commandButton styleClass="purple-button" rendered="#{packageList.subscriptionExists eq false}" icon="fa fa-cart-plus" title="Add to Cart" action="#{packageList.goToAddToCart(pkg)}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <br />
+        <p:button value="Back" styleClass="black-button" outcome="ProductList" />
+    </ui:define>
+</ui:composition>
+

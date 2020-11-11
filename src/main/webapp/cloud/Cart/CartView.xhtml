@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="productid" value="#{cartView.productId}"></f:viewParam>
+            <f:viewParam name="packageid" value="#{cartView.packageId}"></f:viewParam>
+            <f:viewParam name="tenantid" value="#{cartView.tenantId}"></f:viewParam>
+            <f:viewAction action="#{cartView.fillCartValue()}"></f:viewAction>
+        </f:metadata>
+        <br /><br /><br />
+        <div id="register-wrapper">
+            <h:form id="packagedetails">
+                <p:panel header="Package Details">
+                    <h:panelGrid columns="2" >
+                        <h:outputText value="Product Name: " />
+                        <h:outputText value="#{cartView.productName}" styleClass="outputLabel"/>
+                        <h:outputText value="Package Name: " />
+                        <h:outputText value="#{cartView.selectedPackage.name}" styleClass="outputLabel"/>
+                        <h:outputText value="Price:" />
+                        <h:outputText value="#{cartView.selectedPackage.price}" styleClass="outputLabel"/>
+                        <h:outputText value="Duration in Days:" />
+                        <h:outputText value="#{cartView.selectedPackage.durationDays}" styleClass="outputLabel"/>
+                        <h:outputText value="Starting Day:" />
+                        <h:outputText value="#{cartView.selectedPackage.startDate}" styleClass="outputLabel">
+                            <f:convertDateTime pattern="dd-MMM-yyyy" />
+                        </h:outputText>
+                        <h:outputText value="End Day:" />
+                        <h:outputText value="#{cartView.selectedPackage.endDate}" styleClass="outputLabel">
+                            <f:convertDateTime pattern="dd-MMM-yyyy" />
+                        </h:outputText>
+                        <p:button styleClass="purple-button" value="Buy" outcome="MakePayment"/>
+                        <p:button value="Back" styleClass="black-button" outcome="CartList" />
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+
+

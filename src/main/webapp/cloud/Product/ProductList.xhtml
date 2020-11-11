@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" globalOnly="true" sticky="true" showDetail="true" life="5" autoUpdate="true" />
+        <f:metadata>
+            <f:viewAction action="#{productList.fillProductValues()}"/>
+        </f:metadata>
+        <h:form id="producadd">
+            <h3>List of Product</h3>
+            <p:button styleClass="purple-button" value="Add" outcome="ProductAdd" rendered="#{loginController.loginType eq 2}"/>
+        </h:form>
+        <br />
+        <h:form id="productlist">    
+            <p:dataTable var="product" value="#{productList.products}" reflow="true">
+                <p:column headerText="Id" >
+                    <h:outputText value="#{product.id}" />
+                </p:column>
+                <p:column headerText="Product Name">
+                    <p:commandLink update=":productDetail" oncomplete="PF('productDetailDialog').show()"  title="View Details">
+                        <f:setPropertyActionListener value="#{product}" target="#{productList.selectedProduct}" />
+                        <p:outputLabel value="#{product.name}"/>
+                    </p:commandLink>
+
+                </p:column>
+
+                <p:column headerText="Product Url">
+                    <h:outputText value="#{product.producturl}" />
+                </p:column>
+                <p:column headerText="Packages" >
+                    <p:commandButton styleClass="purple-button" icon="fa fa-folder-open" title="List of Packages" action="#{productList.goToPackageList()}" >
+                        <f:setPropertyActionListener value="#{product}" target="#{productList.selectedProduct}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="Change" rendered="#{loginController.loginType eq 2}">
+                    <p:commandButton styleClass="purple-button" icon="fa fa-edit" title="Edit" action="#{productList.goToEditProduct()}" >
+                        <f:setPropertyActionListener value="#{product}" target="#{productList.selectedProduct}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="Delete"  rendered="#{loginController.loginType eq 2}">
+                    <p:commandButton styleClass="red-button" rendered="#{product.prodpackageList.size() eq 0}" icon="fa fa-trash" title="Delete" action="#{productList.deleteProduct(product)}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:dialog header="Product Details" widgetVar="productDetailDialog" modal="false" showEffect="fade" hideEffect="fade" responsive="true" style="margin: 1%">
+            <p:outputPanel id="productDetail">
+                <h:outputText value="#{productList.selectedProduct.description}"/>
+            </p:outputPanel>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
+
+

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="productid" value="#{paymentController.productId}"></f:viewParam>
+            <f:viewParam name="packageid" value="#{paymentController.packageId}"></f:viewParam>
+            <f:viewParam name="cartid" value="#{paymentController.cartId}"></f:viewParam>
+            <f:viewAction action="#{paymentController.fillPaymentValues()}" />
+        </f:metadata>
+        <h:form id="paymentform">
+            <h3>Payment for Package: #{paymentController.packageName}</h3>
+            <h3>Payment for Product: #{paymentController.productName}</h3>
+            <h3>The duration of the subscription will be #{paymentController.paymentPackage.durationDays} days from the date of payment.</h3>
+            <p:panelGrid columns="2">
+                <h:outputLabel for="pamount" value="Payment Amount:" />
+                <h:inputText id="pamount" value="#{paymentController.paymentPackage.price}" disabled="true"/>
+                <p:commandButton styleClass="purple-button" value="Payment" action="#{paymentController.makePayment()}" /> 
+                <p:button styleClass="black-button" value="Back" outcome="CartList" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+

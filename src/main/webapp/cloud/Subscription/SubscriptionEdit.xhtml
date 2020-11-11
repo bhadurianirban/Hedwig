@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="productid" value="#{subscriptionEdit.productId}"></f:viewParam>
+            <f:viewParam name="tenantid" value="#{subscriptionEdit.tenantId}"></f:viewParam>
+            <f:viewAction action="#{subscriptionEdit.fillEditValues()}"/>
+        </f:metadata>
+        <h:form id="subscriptioneditform">
+            <h3>Edit Subscription for Tenant Name: #{subscriptionEdit.tenantName} and Product Name: #{subscriptionEdit.productName}</h3>
+            <p:panelGrid columns="2">
+                <h:outputLabel for="dbadminuserid" value="Start Date:" />
+                <h:outputText value="#{subscriptionEdit.subscriptionEdit.startDate}">
+                    <f:convertDateTime pattern="dd-MMM-yyyy" />
+                </h:outputText>
+                <h:outputLabel for="dbadminuserid" value="End Date:" />
+                <h:outputText value="#{subscriptionEdit.subscriptionEdit.endDate}">
+                    <f:convertDateTime pattern="dd-MMM-yyyy" />
+                </h:outputText>
+                <h:outputLabel for="dbadminuserid" value="DB Admin User Id:" />
+                <h:inputText id="dbadminuserid" value="#{subscriptionEdit.subscriptionEdit.dbadminUserId}" required="true"/>
+                <h:outputLabel for="dbadminpassword" value="DB Admin Password:" />
+                <p:password id="dbadminpassword" value="#{subscriptionEdit.subscriptionEdit.dbadminPassword}" required="true"/>
+                <h:outputLabel for="dbconnurl" value="DB Connection Url:" />
+                <h:inputText id="dbconnurl" value="#{subscriptionEdit.subscriptionEdit.dbconnUrl}" disabled="true" required="true"/>
+
+
+                <p:commandButton styleClass="purple-button" value="Save" action="#{subscriptionEdit.save()}" />
+                <p:button value="Back" styleClass="black-button" outcome="SubscriptionList" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+

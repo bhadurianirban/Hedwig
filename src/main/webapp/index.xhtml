@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>Hedwig</title>
+        <script type="text/javascript">
+            $(function () {
+                $('#menu-button').on('click', function (e) {
+                    $('#menu').toggleClass('overlay-menu');
+                    e.preventDefault();
+                });
+            });
+        </script>
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['yoll/images/yolllogo.png']}"/>
+        <ui:insert name="head"/>
+    </h:head>
+    <f:metadata>
+        <f:viewAction action="#{productList.fillProductValues()}"></f:viewAction>
+    </f:metadata>
+    <h:body styleClass="landing-body">
+
+        <div class="landing-wrapper">
+            <div class="landing-header">
+                <div class="landing-header-content clearfix">
+                    <p:graphicImage name="images/yolllogo.png" library="yoll" width="100" height="40"/>
+
+                    <a id="menu-button" href="#">
+                        <span class="fa fa-bars"></span>
+                    </a>
+                    <ul id="menu">
+                        <li><a href="#introduction">Introduction</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><h:link value = "Admin Login" outcome = "AdminLogin" /></li>
+                        <li><h:link value = "Buy/Maintain" outcome = "TenantLogin" /></li>
+
+                        <li><h:link value = "User Login" outcome = "UserLogin" /></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="introhome" class="intro-container">
+
+                <p:graphicImage styleClass="responsive-img" name="images/dgrfhome.jpg" library="yoll" />
+                <div class="intro-title">
+                    Hedwig
+                </div>
+                <div class="intro-caption">
+                    Don’t let the muggles get you down...
+                </div>
+                <div class="intro-button">
+                <p:button styleClass="purple-button" value="Products"  href="#productlist">
+                    </p:button>                    
+                </div>
+
+            </div>
+
+            <div id="productlist">
+                <div class="features-content">
+                    <span class="feature-title">Unique product Ideas</span>
+                    <p>Fully scalable on the cloud</p>
+                </div>
+
+                <div class="prodcarousel">
+                    <p:carousel numVisible="1" var="product" effect="easeInStrong" 
+                                value="#{productList.products}" itemStyle="text-align:center" 
+                                autoPlayInterval="2500" circular="true" responsive="true">
+                        <p:panelGrid columns="1" style=" width:100%;margin:20px 0px"  layout="grid" styleClass="ui-panelgrid-blank">
+                            <f:facet name="header">
+                                <h:outputText value="#{product.name}" />
+                            </f:facet>
+
+                            <h:outputText value="#{product.description}" />
+                        </p:panelGrid>
+                        <p:panelGrid columns="2" style=" width:100%;margin:20px 0px;"  layout="grid" styleClass="ui-panelgrid-blank">
+                            <p:button href="#{product.producturl}" styleClass="purple-button" value="#{product.name}"/>
+                            <p:button outcome="UserRegister" styleClass="purple-button" value="Register"/>
+                        </p:panelGrid>
+                    </p:carousel>
+                </div>
+
+            </div>
+
+            <div id="features">
+                <div class="features-content">
+                    <span class="feature-title">Hedwig</span>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+                        doloremque.</p>
+
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-4">
+                            <p:graphicImage name="images/landing/section2_1.png" library="omega-layout" styleClass="feature-icon"/>
+                            <span class="feature-text">
+                                <span>Responsive</span>
+                                <p>Kogi Cosby sweater ethical squid irony disrupt, organic tote bag gluten-free.</p>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:graphicImage name="images/landing/section2_2.png" library="omega-layout" styleClass="feature-icon"/>
+                            <span class="feature-text">
+                                <span>Clean</span>
+                                <p>Bushwick meh Blue Bottle pork belly mustache skateboard 3 wolf moon.</p>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:graphicImage name="images/landing/section2_3.png" library="omega-layout" styleClass="feature-icon"/>
+                            <span class="feature-text">
+                                <span>Grid</span>
+                                <p>Banjo tote bag bicycle rights, High Life sartorial cray craft beer whatever.</p>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:graphicImage name="images/landing/section2_4.png" library="omega-layout" styleClass="feature-icon"/>
+                            <span class="feature-text">
+                                <span>Modern</span>
+                                <p>Retro occupy organic, stumptown shabby chic pour-over roof party DIY.</p>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:graphicImage name="images/landing/section2_5.png" library="omega-layout" styleClass="feature-icon"/>
+                            <span class="feature-text">
+                                <span>Documented</span>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam enim numquam.</p>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:graphicImage name="images/landing/section2_6.png" library="omega-layout" styleClass="feature-icon"/>
+                            <span class="feature-text">
+                                <span>Support</span>
+                                <p>Retro occupy organic, stumptown shabby chic pour-over roof party DIY.</p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="landing-footer">
+                <div class="landing-footer-content">
+                    <div class="footer-bottom">
+                        ©  Anirban Bhaduri
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h:outputStylesheet name="css/layout.css" library="omega-layout" />
+        <h:outputStylesheet name="css/yoll.css" library="yoll" />
+    </h:body>
+
+</html>

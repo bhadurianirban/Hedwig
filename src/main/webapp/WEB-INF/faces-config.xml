@@ -1,0 +1,980 @@
+<?xml version="1.0" encoding="utf-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    
+    <name>primefaces_omega</name>
+    
+    <component>
+        <component-type>org.primefaces.component.OmegaMenu</component-type>
+        <component-class>org.primefaces.omega.component.menu.OmegaMenu</component-class>
+    </component>
+    
+    <render-kit>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.OmegaMenuRenderer</renderer-type>
+            <renderer-class>org.primefaces.omega.component.menu.OmegaMenuRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>Landing</from-outcome>
+            <to-view-id>/cloud/landing.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for index-->
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>AdminLogin</from-outcome>
+            <to-view-id>/adminlogin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>TenantLogin</from-outcome>
+            <to-view-id>/TenantLogin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>UserLogin</from-outcome>
+            <to-view-id>/UserLogin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>UserRegister</from-outcome>
+            <to-view-id>/UserRegister.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Admin Login-->
+    <navigation-rule>
+        <from-view-id>/adminlogin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ProductList</from-outcome>
+            <to-view-id>/cloud/Product/ProductList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminLogin</from-outcome>
+            <to-view-id>/adminlogin.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for User Login-->
+    <navigation-rule>
+        <from-view-id>/UserLogin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>UserLogin</from-outcome>
+            <to-view-id>/UserLogin.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>UserRegister</from-outcome>
+            <to-view-id>/UserRegister.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>UserDetails</from-outcome>
+            <to-view-id>cloud/User/UserDetails.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{loginController.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{loginController.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{loginController.roleId}</value>
+                </view-param>
+                <view-param>
+                    <name>userid</name>
+                    <value>#{loginController.userId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Tenant Login-->
+    <navigation-rule>
+        <from-view-id>/TenantLogin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>TenantRegister</from-outcome>
+            <to-view-id>/TenantRegister.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>TenantLogin</from-outcome>
+            <to-view-id>/TenantLogin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ProductList</from-outcome>
+            <to-view-id>/cloud/Product/ProductList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Product Maintenance-->
+    <!--    Navigation cases for Product List-->
+    <navigation-rule>
+        <from-view-id>/cloud/Product/ProductList.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ProductList</from-outcome>
+            <to-view-id>/cloud/Product/ProductList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ProductAdd</from-outcome>
+            <to-view-id>/cloud/Product/ProductAdd.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ProductEdit</from-outcome>
+            <to-view-id>/cloud/Product/ProductEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{productList.selectedProduct['id']}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PackageList</from-outcome>
+            <to-view-id>/cloud/Package/PackageList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{productList.selectedProduct['id']}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Product Add-->
+    <navigation-rule>
+        <from-view-id>/cloud/Product/ProductAdd.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ProductList</from-outcome>
+            <to-view-id>/cloud/Product/ProductList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ProductAdd</from-outcome>
+            <to-view-id>/cloud/Product/ProductAdd.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Product Edit-->
+    <navigation-rule>
+        <from-view-id>/cloud/Product/ProductEdit.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ProductList</from-outcome>
+            <to-view-id>/cloud/Product/ProductList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ProductEdit</from-outcome>
+            <to-view-id>/cloud/Product/ProductEdit.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Package Maintenance-->
+    <!--    Navigation cases for Package List-->
+    <navigation-rule>
+        <from-view-id>/cloud/Package/PackageList.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ProductList</from-outcome>
+            <to-view-id>/cloud/Product/ProductList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ParamList</from-outcome>
+            <to-view-id>/cloud/Package/ParamList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{packageList.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{packageList.selectedPkg.getProdpackagePK().getId()}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>packageAdd</from-outcome>
+            <to-view-id>/cloud/Package/packageAdd.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{packageList.productId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PackageEdit</from-outcome>
+            <to-view-id>/cloud/Package/PackageEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{packageList.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{packageList.selectedPkg.getProdpackagePK().getId()}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>TenantLogin</from-outcome>
+            <to-view-id>/TenantLogin.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PackageList</from-outcome>
+            <to-view-id>/cloud/Package/PackageList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{packageList.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>productname</name>
+                    <value>#{packageList.productName}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>CartList</from-outcome>
+            <to-view-id>/cloud/Cart/CartList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid></name>
+                    <value>#{loginController.getTenant().getId()}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Package Edit-->
+    <navigation-rule>
+        <from-view-id>/cloud/Package/PackageEdit.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>PackageList</from-outcome>
+            <to-view-id>/cloud/Package/PackageList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{packageEdit.productId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PackageEdit</from-outcome>
+            <to-view-id>/cloud/Package/PackageEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{packageEdit.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{packageEdit.packageId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Package Add-->
+    <navigation-rule>
+        <from-view-id>/cloud/Package/packageAdd.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>PackageList</from-outcome>
+            <to-view-id>/cloud/Package/PackageList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{packageAdd.productId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PackageAdd</from-outcome>
+            <to-view-id>/cloud/Package/packageAdd.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for user details edit-->      
+    <navigation-rule>
+        <from-view-id>/cloud/User/UserDetails.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>UserDetails</from-outcome>
+            <to-view-id>/cloud/User/UserDetails.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userDetails.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userDetails.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{userDetails.roleId}</value>
+                </view-param>
+                <view-param>
+                    <name>userid</name>
+                    <value>#{userDetails.userId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for user activation-->
+    <navigation-rule>
+        <from-view-id>/cloud/User/UserActivation.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>UserActivation</from-outcome>
+            <to-view-id>/cloud/User/UserActivation.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userActivation.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userActivation.tenantId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for user deactivation-->
+    <navigation-rule>
+        <from-view-id>/cloud/User/UserDeactivation.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>UserDeactivation</from-outcome>
+            <to-view-id>/cloud/User/UserDeactivation.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userActivation.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userActivation.tenantId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Package Parameter Maintenance-->
+    <!--    Navigation cases for Parameter List-->
+    <navigation-rule>
+        <from-view-id>/cloud/Package/ParamList.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>PackageList</from-outcome>
+            <to-view-id>/cloud/Package/PackageList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{paramList.productId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ParamAdd</from-outcome>
+            <to-view-id>/cloud/Package/ParamAdd.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{paramList.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{paramList.packageId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ParamEdit</from-outcome>
+            <to-view-id>/cloud/Package/ParamEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{paramList.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{paramList.packageId}</value>
+                </view-param>
+                <view-param>
+                    <name>paramkey</name>
+                    <value>#{paramList.selectedParam.getPackageparamPK().getParamKey()}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ParamList</from-outcome>
+            <to-view-id>/cloud/Package/ParamList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{paramList.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{paramList.packageId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Parameter Add-->
+    <navigation-rule>
+        <from-view-id>/cloud/Package/ParamAdd.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ParamList</from-outcome>
+            <to-view-id>/cloud/Package/ParamList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{paramAdd.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{paramAdd.packageId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ParamAdd</from-outcome>
+            <to-view-id>/cloud/Package/ParamAdd.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{paramAdd.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{paramAdd.packageId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Parameter Edit-->
+    <navigation-rule>
+        <from-view-id>/cloud/Package/ParamEdit.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ParamList</from-outcome>
+            <to-view-id>/cloud/Package/ParamList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{paramEdit.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{paramEdit.packageId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ParamEdit</from-outcome>
+            <to-view-id>/cloud/Package/ParamEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{paramEdit.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{paramEdit.packageId}</value>
+                </view-param>
+                <view-param>
+                    <name>paramkey</name>
+                    <value>#{paramEdit.paramKey}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        
+    </navigation-rule>
+    <!--    Navigation cases for Subscription Maintenance-->
+    <!--    Navigation cases for Subscription List-->
+    <navigation-rule>
+        <from-view-id>/cloud/Subscription/SubscriptionList.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>SubscriptionList</from-outcome>
+            <to-view-id>/cloud/Subscription/SubscriptionList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SubscriptionEdit</from-outcome>
+            <to-view-id>/cloud/Subscription/SubscriptionEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{subscriptionList.selectedSubscription['tenantId']}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{subscriptionList.selectedSubscription['productId']}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RoleList</from-outcome>
+            <to-view-id>/cloud/Role/RoleList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{subscriptionList.selectedSubscription['tenantId']}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{subscriptionList.selectedSubscription['productId']}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Subscription Edit-->
+    <navigation-rule>
+        <from-view-id>/cloud/Subscription/SubscriptionEdit.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>SubscriptionList</from-outcome>
+            <to-view-id>/cloud/Subscription/SubscriptionList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SubscriptionEdit</from-outcome>
+            <to-view-id>/cloud/Subscription/SubscriptionEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{subscriptionEdit.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{subscriptionEdit.productId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Subscription Activation-->
+    <navigation-rule>
+        <from-view-id>/cloud/Subscription/SubscriptionActivation.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>SubscriptionActivation</from-outcome>
+            <to-view-id>/cloud/Subscription/SubscriptionActivation.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Subscription Deactivation-->
+    <navigation-rule>
+        <from-view-id>/cloud/Subscription/SubscriptionDeactivation.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>SubscriptionDeactivation</from-outcome>
+            <to-view-id>/cloud/Subscription/SubscriptionDeactivation.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Role Maintenance-->
+    <!--    Navigation cases for Role List-->
+    <navigation-rule>
+        <from-view-id>/cloud/Role/RoleList.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>SubscriptionList</from-outcome>
+            <to-view-id>/cloud/Subscription/SubscriptionList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RoleList</from-outcome>
+            <to-view-id>/cloud/Role/RoleList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{roleList.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{roleList.productId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RoleEdit</from-outcome>
+            <to-view-id>/cloud/Role/RoleEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{roleList.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{roleList.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{roleList.selectedRole.getRolePK().getId()}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>UserList</from-outcome>
+            <to-view-id>/cloud/User/UserList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{roleList.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{roleList.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{roleList.selectedRole.getRolePK().getId()}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RoleAdd</from-outcome>
+            <to-view-id>/cloud/Role/RoleAdd.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{roleList.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{roleList.productId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Role Edit-->
+    <navigation-rule>
+        <from-view-id>/cloud/Role/RoleEdit.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>RoleList</from-outcome>
+            <to-view-id>/cloud/Role/RoleList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{roleEdit.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{roleEdit.productId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RoleEdit</from-outcome>
+            <to-view-id>/cloud/Role/RoleEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{roleEdit.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{roleEdit.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{roleEdit.roleId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Role Add-->
+    <navigation-rule>
+        <from-view-id>/cloud/Role/RoleAdd.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>RoleList</from-outcome>
+            <to-view-id>/cloud/Role/RoleList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{roleAdd.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{roleAdd.tenantId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RoleAdd</from-outcome>
+            <to-view-id>/cloud/Role/RoleAdd.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{roleAdd.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{roleAdd.tenantId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for User Maintenance-->
+    <!--    Navigation cases for User List-->
+    <navigation-rule>
+        <from-view-id>/cloud/User/UserList.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>RoleList</from-outcome>
+            <to-view-id>/cloud/Role/RoleList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userList.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userList.productId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>UserEdit</from-outcome>
+            <to-view-id>/cloud/User/UserEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>userid</name>
+                    <value>#{userList.selectedUser.getUserPK().getId()}</value>
+                </view-param>
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userList.selectedUser.getUserPK().getTenantId()}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userList.selectedUser.getUserPK().getProductId()}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{userList.selectedUser.getUserPK().getRoleId()}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>UserAdd</from-outcome>
+            <to-view-id>/cloud/User/UserAdd.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userList.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userList.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{userList.roleId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>UserList</from-outcome>
+            <to-view-id>/cloud/User/UserList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userList.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userList.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{userList.roleId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for User Edit-->
+    <navigation-rule>
+        <from-view-id>/cloud/User/UserEdit.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>UserList</from-outcome>
+            <to-view-id>/cloud/User/UserList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userEdit.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userEdit.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{userEdit.roleId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>UserEdit</from-outcome>
+            <to-view-id>/cloud/User/UserEdit.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userEdit.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userEdit.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{userEdit.roleId}</value>
+                </view-param>
+                <view-param>
+                    <name>userid</name>
+                    <value>#{userEdit.userId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for User Add-->
+    <navigation-rule>
+        <from-view-id>/cloud/User/UserAdd.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>UserList</from-outcome>
+            <to-view-id>/cloud/User/UserList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userAdd.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userAdd.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{userAdd.roleId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>UserAdd</from-outcome>
+            <to-view-id>/cloud/User/UserAdd.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{userAdd.tenantId}</value>
+                </view-param>
+                <view-param>
+                    <name>productid</name>
+                    <value>#{userAdd.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>roleid</name>
+                    <value>#{userAdd.roleId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Cart Maintenance-->
+    <!--    Navigation cases for Cart List-->
+    <navigation-rule>
+        <from-view-id>/cloud/Cart/CartList.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>CartView</from-outcome>
+            <to-view-id>/cloud/Cart/CartView.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{cartList.selectedCart['productId']}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{cartList.selectedCart['packageId']}</value>
+                </view-param>
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{cartList.tenantId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>Landing</from-outcome>
+            <to-view-id>/cloud/landing.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{cartList.tenantId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>MakePayment</from-outcome>
+            <to-view-id>/cloud/Payment/MakePayment.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{cartList.selectedCart['productId']}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{cartList.selectedCart['packageId']}</value>
+                </view-param>
+                <view-param>
+                    <name>cartid</name>
+                    <value>#{cartList.selectedCart['cartId']}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Cart View-->
+    <navigation-rule>
+        <from-view-id>/cloud/Cart/CartView.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>CartList</from-outcome>
+            <to-view-id>/cloud/Cart/CartList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{cartView.tenantId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>MakePayment</from-outcome>
+            <to-view-id>/cloud/Payment/MakePayment.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>productid</name>
+                    <value>#{cartView.productId}</value>
+                </view-param>
+                <view-param>
+                    <name>packageid</name>
+                    <value>#{cartView.packageId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+    </navigation-rule>
+    <!--    Navigation cases for Payment Maintenance-->
+    <!--    Navigation cases for Make Payment-->
+    <navigation-rule>
+        <from-view-id>/cloud/Payment/MakePayment.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>CartList</from-outcome>
+            <to-view-id>/cloud/Cart/CartList.xhtml</to-view-id>
+            <redirect include-view-params="true">
+                <view-param>
+                    <name>tenantid</name>
+                    <value>#{paymentController.tenantId}</value>
+                </view-param>
+            </redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SubscriptionList</from-outcome>
+            <to-view-id>/cloud/Subscription/SubscriptionList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>MakePayment</from-outcome>
+            <to-view-id>/cloud/Payment/MakePayment.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+</faces-config>

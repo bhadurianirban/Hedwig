@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" autoUpdate="true" />
+        <f:metadata>
+            <f:viewParam name="productid" value="#{paramAdd.productId}"></f:viewParam>
+            <f:viewParam name="packageid" value="#{paramAdd.packageId}"></f:viewParam>
+            <f:viewAction action="#{paramAdd.fillAddScreen()}"></f:viewAction>
+        </f:metadata>
+        <h:form id="addparamform">
+            <h3>Add new parameter for Product: #{paramAdd.productName} and Package: #{paramAdd.packageName}</h3>
+            <p:panelGrid columns="2">
+                <h:outputLabel for="key" value="Key:" />
+                <p:inputText id="key" value="#{paramAdd.packageparamAdd.packageparamPK.paramKey}" required="true" >
+                    <f:validator validatorId="custom.paramKeyValidator" />
+                </p:inputText>
+                <h:outputLabel for="desc" value="Description:" />
+                <p:inputText id="desc" value="#{paramAdd.packageparamAdd.paramDescription}" required="true" />
+                <h:outputLabel for="value" value="Value:" />
+                <p:inputText id="value" value="#{paramAdd.packageparamAdd.paramValue}" required="true" />
+                
+                <p:commandButton styleClass="purple-button" value="Add" validateClient="true" ajax="false" action="#{paramAdd.add()}" />
+                <p:button styleClass="black-button" value="Back" outcome="ParamList" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>    

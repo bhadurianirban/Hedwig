@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/signin.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <span class="title">User Register</span>
+        <f:metadata>
+            <f:viewParam name="product" value="#{userRegister.productId}"></f:viewParam>
+            <f:viewParam name="tenant" value="#{userRegister.tenantId}"></f:viewParam>
+            <f:viewAction action="#{userRegister.fillForm()}"></f:viewAction>
+        </f:metadata>
+        <h:form>
+            <br />
+            <div class="ui-g ui-fluid" style="text-align: left">
+                <p:growl id="growl" sticky="true" showDetail="true" life="5" autoUpdate="true" />
+                <div class="ui-g-6">
+                    <p:outputLabel value="Select Tenant:" />
+                </div>
+                <div class="ui-g-6">
+                    <p:selectOneMenu id="selectonetenant" value="#{userRegister.user.userPK.tenantId}" required="true" rendered="#{userRegister.tenantId==0}">
+                        <p:ajax listener="#{userRegister.onTenantChange()}" update="product" />
+                        <f:selectItem itemLabel="Select tenant" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{userRegister.tenantMap}" />
+                    </p:selectOneMenu>
+                    <h:outputText value="#{userRegister.tenantName}" rendered="#{userRegister.tenantId!=0}"></h:outputText>
+                </div>
+                <div class="ui-g-6">
+                    <p:outputLabel for="product" value="Select Product:" />
+                </div>
+                <div class="ui-g-6">
+                    <p:selectOneMenu id="product" value="#{userRegister.user.userPK.productId}" required="true" rendered="#{userRegister.productId==0}">
+                        <p:ajax listener="#{userRegister.onTenantProductChange()}" update="role" />
+                        <f:selectItem itemLabel="Select product" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{userRegister.productMap}" />
+                    </p:selectOneMenu>
+                    <h:outputText value="#{userRegister.productName}" rendered="#{userRegister.productId!=0}"></h:outputText>
+                </div>
+                <div class="ui-g-6">
+                    <h:outputText value="Role: *" />
+                </div>
+                <div class="ui-g-6">
+                    <p:selectOneMenu id="role" value="#{userRegister.user.userPK.roleId}" rendered="true">
+                        <f:selectItem itemLabel="Select role" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{userRegister.roleMap}" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="ui-g-6">
+                    <h:outputText value="User Id: *" />
+                </div>
+                <div class="ui-g-6">
+                    <p:inputText value="#{userRegister.user.userPK.id}" required="true" label="Userid"/>
+                </div>
+                <div class="ui-g-6">
+                    <h:outputText value="Name: *" />
+                </div>
+                <div class="ui-g-6">
+                    <p:inputText value="#{userRegister.user.name}" required="true" label="Name"/>
+                </div>
+                <div class="ui-g-6">
+                    <h:outputText value="Password: *" />
+                </div>
+                <div class="ui-g-6">
+                    <p:password id="feedback1" value="#{userRegister.user.password}" feedback="true" match="feedback2" required="true" label="Password" />
+                </div>
+                <div class="ui-g-6">
+                    <h:outputText value="Re-enter Password: *" />
+                </div>
+                <div class="ui-g-6">
+                    <p:password id="feedback2" value="#{userRegister.user.password}" required="true" label="Password" />
+                </div>
+
+                <div class="ui-g-6">
+                    <p:commandButton styleClass="purple-button" value="Create" action="#{userRegister.userAdd()}"/>
+                </div>
+                <div class="ui-g-6">
+                    <p:button value="Home" styleClass="black-button" outcome="/index" icon="fa fa-home"/> 
+                </div>
+            </div>
+            <br />
+        </h:form>
+    </ui:define>
+
+</ui:composition>
