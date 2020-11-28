@@ -709,7 +709,7 @@ public class MasterDataService {
     }
 
     private String getDBName(int tenantId, int productId) {
-        String dbName = "dgrfdb" + String.format("%02d", productId) + String.format("%02d", tenantId);
+        String dbName = "yolldb" + String.format("%02d", productId) + String.format("%02d", tenantId);
         return dbName;
     }
 
