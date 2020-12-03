@@ -75,8 +75,17 @@ public class MasterDataService {
     private EntityManagerFactory emf;
 
     public MasterDataService() {
-
-        emf = Persistence.createEntityManagerFactory("org.hedwig_persistence");
+        try {
+            emf = Persistence.createEntityManagerFactory("org.hedwig_persistence");
+        } catch (Exception e) {
+            try {
+                HashMap<String, String> DBPROPERTIES = new HashMap<>();
+                DBPROPERTIES.put("javax.persistence.jdbc.url", "jdbc:mysql://mysqldb:3306/tenant?zeroDateTimeBehavior=CONVERT_TO_NULL");
+                emf = Persistence.createEntityManagerFactory("org.hedwig_persistence",DBPROPERTIES);
+            } catch (Exception ende) {
+                Logger.getLogger(MasterDataService.class.getName()).log(Level.SEVERE, null, ende);
+            }
+        }
     }
 
     public List<Product> getProductList() {
@@ -497,20 +506,21 @@ public class MasterDataService {
         }
     }
 
-    public RoleDTO  getRoleList(RoleDTO roleDTO) {
+    public RoleDTO getRoleList(RoleDTO roleDTO) {
         SubscriptionDAO subscriptionDAO = new SubscriptionDAO(emf);
         int tenantId = roleDTO.getCloudAuthCredentials().getTenantId();
-        int productId  = roleDTO.getCloudAuthCredentials().getProductId();
+        int productId = roleDTO.getCloudAuthCredentials().getProductId();
         SubscriptionPK spk = new SubscriptionPK(tenantId, productId);
         Subscription subscription = subscriptionDAO.findSubscription(spk);
         List<Role> roles = subscription.getRoleList();
-        Map<String,String> roleMap = new HashMap<>();
-        for (Role role:roles) {
+        Map<String, String> roleMap = new HashMap<>();
+        for (Role role : roles) {
             roleMap.put(Integer.toString(role.getRolePK().getId()), role.getName());
         }
         roleDTO.setRoleMap(roleMap);
         return roleDTO;
     }
+
     public List<Role> getRoleList(int tenantId, int productId) {
         SubscriptionDAO subscriptionDAO = new SubscriptionDAO(emf);
         SubscriptionPK spk = new SubscriptionPK(tenantId, productId);
@@ -518,6 +528,7 @@ public class MasterDataService {
         List<Role> roles = subscription.getRoleList();
         return roles;
     }
+
     public Role getRoleEditValue(int roleId, int tenantId, int productId) {
         RoleDAO roleDAO = new RoleDAO(emf);
         RolePK rolePK = new RolePK(roleId, tenantId, productId);
@@ -882,7 +893,7 @@ public class MasterDataService {
             Userlogintrace userlogintrace = userlogintraces.get(0);
             deleteUserTrace(userlogintrace);
         } else {
-            
+
         }
 
         userAuthDTO.setResponseCode(HedwigResponseCode.SUCCESS);
@@ -908,7 +919,7 @@ public class MasterDataService {
         for (Object[] obj : results) {
             String dbname = (String) obj[0];
             dbsize = (BigDecimal) (obj[1]);
-            
+
         }
         return dbsize;
     }
