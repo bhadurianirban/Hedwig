@@ -28,6 +28,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import org.apache.ibatis.jdbc.ScriptRunner;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.hedwig.tenant.DAO.CartDAO;
 import org.hedwig.tenant.DAO.LoginTraceDAO;
 import org.hedwig.tenant.DAO.PackageParamDAO;
@@ -75,17 +76,14 @@ public class MasterDataService {
     private EntityManagerFactory emf;
 
     public MasterDataService() {
-        try {
-            emf = Persistence.createEntityManagerFactory("org.hedwig_persistence");
-        } catch (Exception e) {
-            try {
-                HashMap<String, String> DBPROPERTIES = new HashMap<>();
-                DBPROPERTIES.put("javax.persistence.jdbc.url", "jdbc:mysql://mysqldb:3306/tenant?zeroDateTimeBehavior=CONVERT_TO_NULL");
-                emf = Persistence.createEntityManagerFactory("org.hedwig_persistence",DBPROPERTIES);
-            } catch (Exception ende) {
-                Logger.getLogger(MasterDataService.class.getName()).log(Level.SEVERE, null, ende);
-            }
-        }
+        
+            Map props = new HashMap();
+            props.put(PersistenceUnitProperties.JDBC_USER, "bhadurianirban");
+            props.put(PersistenceUnitProperties.JDBC_PASSWORD, "Jhom2brishti");
+            props.put(PersistenceUnitProperties.JDBC_DRIVER, "com.mysql.cj.jdbc.Driver");
+            props.put(PersistenceUnitProperties.JDBC_URL, "jdbc:mysql://localhost:3306,mysqldb:3306/tenant?zeroDateTimeBehavior=CONVERT_TO_NULL");
+            emf = Persistence.createEntityManagerFactory("org.hedwig_persistence",props);
+        
     }
 
     public List<Product> getProductList() {
